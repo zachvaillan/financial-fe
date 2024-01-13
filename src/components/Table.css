@@ -1,0 +1,7 @@
+table {
+  width: 100%;
+}
+
+tr:nth-child(2n) {
+  background-color: rgb(228, 226, 226);
+}

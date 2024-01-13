@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useFetcher } from '../useFetcher';
 import { usePostRequest } from '../usePostRequest';
-import './Assets.css';
+import { Table } from './Table';
+import { centsToDollars } from '../utils/centsToDollars';
+import { Dialog, DialogContent } from '@mui/material';
+import { AccountForm } from './AccountForm';
 
 export const Assets = () => {
     const { data, fetchData } = useFetcher('/api/v1/assets');
     const { sendPostRequest } = usePostRequest();
+    const [newOpen, setNewOpen] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -27,60 +31,30 @@ export const Assets = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        sendPostRequest('/api/v1/assets', formData);
+        const formDataWithCents = { ...formData, amount_cents: formData.amount * 100 }
+        sendPostRequest('/api/v1/assets', formDataWithCents, 'POST');
+        fetchData();
     };
+
+    const handleDelete = (id) => {
+      sendPostRequest(`/api/v1/assets/${id}`, null, 'DELETE');
+      fetchData();
+    }
+
+    const mappedData = data?.map((asset) => {
+      return { ...asset, amount: centsToDollars(asset.amount_cents) }
+    });
 
     return (
         <div>
-            <form className="Assets" onSubmit={handleSubmit}>
-                <h3>Create Asset</h3>
-                <div>
-                    <label>Name:</label>
-                    <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <label>Description:</label>
-                    <input
-                        type="textarea"
-                        name="description"
-                        value={formData.description}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <label>Amount (cents):</label>
-                    <input
-                        type="text"
-                        name="amount_cents"
-                        checked={formData.amount}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <label>Interest rate:</label>
-                    <input
-                        type="text"
-                        name="interest_rate"
-                        value={formData.interest_rate}
-                        onChange={handleChange}
-                    />
-                </div>
-                <button type="submit">Submit</button>
-            </form>
-            <h1>Assets</h1>
-            {data?.map((asset) => {
-                return (
-                    <div>
-                        <h3>{asset.name}</h3>
-                        <p>{asset.amount_cents}</p>
-                    </div>
-                )
-            })}
+          <Dialog open={newOpen} onClose={() => setNewOpen(false)}>
+            <DialogContent>
+              <AccountForm title="Create Asset" formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} />
+            </DialogContent>
+          </Dialog>
+          <h1>Assets</h1>
+          <button onClick={() => setNewOpen(true)}>New Asset</button>
+          <Table handleDelete={handleDelete} rows={mappedData} columns={['Name', 'Amount']} keys={['name', 'amount']} />
         </div>
     )
 }

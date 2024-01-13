@@ -5,11 +5,11 @@ export const usePostRequest = () => {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    const sendPostRequest = async (url, requestBody, method) => {
+    const sendPostRequest = async (url, requestBody) => {
         setIsLoading(true);
         try {
             const response = await fetch(`http://localhost:3001${url}`, {
-                method: method,
+                method: 'DELETE',
                 headers: {
                   'Content-Type': 'application/json'
                 },
