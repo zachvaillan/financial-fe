@@ -54,7 +54,7 @@ export const Liabilities = () => {
             </Dialog>
             <h1>Liabilities</h1>
             <button onClick={() => setNewOpen(true)}>New Liability</button>
-            <Table handleDelete={handleDelete} rows={mappedData} columns={['Name', 'Amount']} keys={['name', 'amount']} />
+            <Table handleDelete={handleDelete} rows={mappedData} columns={['Name', 'Amount', 'Rate']} keys={['name', 'amount', 'interest_rate']} />
         </div>
     )
 }
