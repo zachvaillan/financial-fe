@@ -12,7 +12,7 @@ function App() {
 
   return (
     <div className="App">
-      <div>
+      <div className="info">
         <Tabs handleCurrentTab={handleCurrentTab} />
         {currentTab === 'Assets' && <Assets />}
         {currentTab === 'Liabilities' && <Liabilities />}

@@ -4,7 +4,7 @@ import { usePostRequest } from '../usePostRequest';
 import { Table } from './Table';
 import { centsToDollars } from '../utils/centsToDollars';
 import { Dialog, DialogContent } from '@mui/material';
-import { AccountForm } from './AccountForm';
+import { TransactionForm } from './TransactionForm';
 
 export const Incomes = () => {
     const { data, fetchData } = useFetcher('/api/v1/incomes');
@@ -14,7 +14,8 @@ export const Incomes = () => {
         name: '',
         email: '',
         amount_cents: '',
-        interest_rate: '',
+        start_date: '',
+        end_date: '',
     });
 
     useEffect(() => {
@@ -49,7 +50,7 @@ export const Incomes = () => {
         <div>
           <Dialog open={newOpen} onClose={() => setNewOpen(false)}>
             <DialogContent>
-              <AccountForm title="Create Income" formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} />
+              <TransactionForm title="Create Income" formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} />
             </DialogContent>
           </Dialog>
           <h1>Incomes</h1>
