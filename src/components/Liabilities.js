@@ -44,7 +44,12 @@ export const Liabilities = () => {
     const mappedData = data?.map((li) => { 
       return { ...li, amount: centsToDollars(li.amount_cents) }
     })
-
+    
+    const totalAmount = data?.reduce(
+      (accumulator, currentValue) => accumulator + currentValue.amount_cents,
+      0,
+    );
+    
     return (
         <div>
             <Dialog open={newOpen} onClose={() => setNewOpen(false)}>
@@ -54,6 +59,7 @@ export const Liabilities = () => {
             </Dialog>
             <h1>Liabilities</h1>
             <button onClick={() => setNewOpen(true)}>New Liability</button>
+            <div>Total: {totalAmount / 100}</div>
             <Table handleDelete={handleDelete} rows={mappedData} columns={['Name', 'Amount', 'Rate']} keys={['name', 'amount', 'interest_rate']} />
         </div>
     )

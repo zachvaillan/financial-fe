@@ -13,7 +13,7 @@ export const Assets = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        amount_cents: '',
+        amount: '',
         interest_rate: '',
     });
 

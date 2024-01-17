@@ -26,7 +26,7 @@ export const AccountForm = ({ title, formData, handleSubmit, handleChange }) => 
           <label>Amount:</label>
           <input
               type="text"
-              name="amount_cents"
+              name="amount"
               checked={formData.amount}
               onChange={handleChange}
           />
