@@ -13,7 +13,7 @@ export const Expenses = () => {
     const [formData, setFormData] = useState({
       name: '',
       email: '',
-      amount_cents: '',
+      amount: '',
       start_date: '',
       end_date: '',
     });
@@ -46,6 +46,11 @@ export const Expenses = () => {
       return { ...expense, amount: centsToDollars(expense.amount_cents) }
     });
 
+    const totalAmount = data?.reduce(
+      (accumulator, currentValue) => accumulator + currentValue.amount_cents,
+      0,
+    );
+
     return (
         <div>
           <Dialog open={newOpen} onClose={() => setNewOpen(false)}>
@@ -55,6 +60,7 @@ export const Expenses = () => {
           </Dialog>
           <h1>Expenses</h1>
           <button onClick={() => setNewOpen(true)}>New Expense</button>
+          <div>Total: {totalAmount / 100}</div>
           <Table handleDelete={handleDelete} rows={mappedData} columns={['Name', 'Amount']} keys={['name', 'amount']} />
         </div>
     )

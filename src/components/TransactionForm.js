@@ -26,7 +26,7 @@ export const TransactionForm = ({ title, formData, handleSubmit, handleChange })
         <label>Amount:</label>
         <input
           type="text"
-          name="amount_cents"
+          name="amount"
           value={formData.amount}
           onChange={handleChange}
         />
