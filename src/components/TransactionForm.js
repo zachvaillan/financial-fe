@@ -36,8 +36,10 @@ export const TransactionForm = ({ title, formData, handleSubmit, handleChange })
         <input type="date" name="start_date" value={formData.start_date} onChange={handleChange} />
       </div>
       <div>
-        <label>End Date</label>
-        <input type="date" name="end_date" value={formData.end_date}  onChange={handleChange} />
+        <label>Frequency</label>
+        <select name="recurrence_rule">
+          <option value="monthly">Monthly</option>
+        </select>
       </div>
       <button type="submit">Submit</button>
     </form>

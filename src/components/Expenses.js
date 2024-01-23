@@ -15,7 +15,7 @@ export const Expenses = () => {
       email: '',
       amount: '',
       start_date: '',
-      end_date: '',
+      recurrence_rule: '',
     });
 
     useEffect(() => {

@@ -13,9 +13,9 @@ export const Incomes = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        amount_cents: '',
+        amount: '',
         start_date: '',
-        end_date: '',
+        recurrence_rule: '',
     });
 
     useEffect(() => {
