@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './calendar.css'
 import { useFetcher } from '../useFetcher';
+import { centsToDollars } from '../utils/centsToDollars';
 
 export const Calendar = () => {
     const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -17,6 +18,7 @@ export const Calendar = () => {
     const pushedDays = Array.from({ length: firstDay - 1 });
     days.unshift(...pushedDays)
     const currentDate = date.getDate();
+    let totalAmount = 10000;
 
     return (
         <div>
@@ -34,6 +36,40 @@ export const Calendar = () => {
                         {day}
                     </div>
                 ))}
+            </div>
+            <div>
+              {data?.incomes.map((obj) => {
+                const dates = obj.dates
+                const keys = Object.keys(dates)
+                return (
+                  <div className='obj-date' style={{backgroundColor: 'lightgreen'}}>
+                    <p>{obj.name}</p>
+                    <p>+{centsToDollars(obj.amount_cents)}</p>
+                    {keys?.map((key) => {
+                      return (
+                        <p>{obj.dates[key]}</p>
+                      )
+                    })}
+                    <p>{centsToDollars(obj.amount_cents + totalAmount)}</p>
+                  </div>
+                )
+              })}
+              {data?.expenses.map((obj) => {
+                const dates = obj.dates
+                const keys = Object.keys(dates)
+                return (
+                  <div className='obj-date' style={{backgroundColor: "lightpink"}}>
+                    <p>{obj.name}</p>
+                    <p>-{centsToDollars(obj.amount_cents)}</p>
+                    {keys?.map((key) => {
+                      return (
+                        <p>{obj.dates[key]}</p>
+                      )
+                    })}
+                    <p>{centsToDollars(totalAmount - obj.amount_cents)}</p>
+                  </div>
+                )
+              })}
             </div>
         </div>
     );

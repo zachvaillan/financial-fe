@@ -12,3 +12,8 @@
 .active {
     background-color: yellow;
 }
+
+.obj-date {
+  display: flex;
+  justify-content: space-evenly;
+}
