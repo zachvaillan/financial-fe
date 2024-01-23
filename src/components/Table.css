@@ -5,3 +5,7 @@ table {
 tr:nth-child(2n) {
   background-color: rgb(228, 226, 226);
 }
+
+td {
+  cursor: pointer;
+}

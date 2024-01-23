@@ -4,6 +4,7 @@ export const useFetcher = (url, options) => {
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    console.log(url)
 
     const fetchData = async () => {
         setIsLoading(true);

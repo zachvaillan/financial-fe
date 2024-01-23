@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './calendar.css'
+import { useFetcher } from '../useFetcher';
 
 export const Calendar = () => {
     const [currentMonth, setCurrentMonth] = useState(new Date());
+    const { data, fetchData } = useFetcher('/api/v1/calendar')
     const date = new Date()
+
+    useEffect(() => {
+      fetchData();
+    }, []);
 
     const daysCount = getDaysInMonth(date);
     const firstDay = getFirstDayOfMonth(date);

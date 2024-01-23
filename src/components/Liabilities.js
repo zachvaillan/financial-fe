@@ -6,7 +6,7 @@ import { centsToDollars } from '../utils/centsToDollars';
 import { AccountForm } from './AccountForm';
 import { Dialog, DialogContent } from '@mui/material';
 
-export const Liabilities = () => {
+export const Liabilities = ({setOpenLiability}) => {
     const { data, fetchData } = useFetcher('/api/v1/liabilities');
     const { sendPostRequest } = usePostRequest();
     const [newOpen, setNewOpen] = useState(false);
@@ -60,7 +60,7 @@ export const Liabilities = () => {
             <h1>Liabilities</h1>
             <button onClick={() => setNewOpen(true)}>New Liability</button>
             <div>Total: {totalAmount / 100}</div>
-            <Table handleDelete={handleDelete} rows={mappedData} columns={['Name', 'Amount', 'Rate']} keys={['name', 'amount', 'interest_rate']} />
+            <Table handleOpen={setOpenLiability} handleDelete={handleDelete} rows={mappedData} columns={['Name', 'Amount', 'Rate']} keys={['name', 'amount', 'interest_rate']} />
         </div>
     )
 }

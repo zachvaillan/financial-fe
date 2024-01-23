@@ -1,7 +1,7 @@
 import ClearIcon from '@mui/icons-material/Clear';
 import './Table.css';
 
-export const Table = ({ columns, rows, keys, handleDelete }) => {
+export const Table = ({ columns, rows, keys, handleDelete, handleOpen }) => {
   return (
     <table>
       <thead>
@@ -19,7 +19,7 @@ export const Table = ({ columns, rows, keys, handleDelete }) => {
             <tr>
               {keys?.map((key) => {
                 return(
-                  <td>{row[key]}</td>
+                  <td onClick={() => handleOpen(row.id)}>{row[key]}</td>
                 )
               })}
               <ClearIcon style={{cursor: 'pointer', color: 'red'}} onClick={() => handleDelete(row.id)} />
