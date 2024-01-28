@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useFetcher } from '../useFetcher';
-import { AccountForm } from './AccountForm';
+import { TransactionForm } from './TransactionForm';
 
-export const Liability = ({ id }) => {
-  const { data, fetchData } = useFetcher(`/api/v1/liabilities/${id}`);
+export const Expense = () => {
+  const { data, fetchData } = useFetcher(`/api/v1/expenses/${id}`);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -24,7 +24,7 @@ export const Liability = ({ id }) => {
 
   return (
     <div>
-      <AccountForm title="Edit Liability" formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} />
+      <TransactionForm title="Edit Expense" formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} />
     </div>
   );
-};
+}

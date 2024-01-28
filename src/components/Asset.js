@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useFetcher } from '../useFetcher';
 import { AccountForm } from './AccountForm';
 
-export const Liability = ({ id }) => {
-  const { data, fetchData } = useFetcher(`/api/v1/liabilities/${id}`);
+export const Asset = () => {
+  const { data, fetchData } = useFetcher(`/api/v1/assets/${id}`);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -24,7 +24,7 @@ export const Liability = ({ id }) => {
 
   return (
     <div>
-      <AccountForm title="Edit Liability" formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} />
+      <AccountForm title="Edit Asset" formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} />
     </div>
   );
-};
+}
