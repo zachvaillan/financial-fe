@@ -14,9 +14,9 @@ export const DateTable = () => {
   const lineItems = useMemo(() => {
     if (!data) return [];
 
-    const cashFlows = data.incomes.concat(data.expenses);
-    return cashFlows.map((cashFlow) => {
-      return {...cashFlow, dollars: centsToDollars(cashFlow.amount_cents), date: cashFlow.dates.start_date}
+    console.log(data)
+    return data.map((cashFlow) => {
+      return {...cashFlow, dollars: centsToDollars(cashFlow.amount.cents), date: cashFlow.occurence_date}
     })
   }, [data])
 
