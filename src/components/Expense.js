@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import { useFetcher } from '../useFetcher';
 import { TransactionForm } from './TransactionForm';
 
-export const Expense = () => {
+export const Expense = ({id}) => {
   const { data, fetchData } = useFetcher(`/api/v1/expenses/${id}`);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     amount: '',
-    interest_rate: '',
+    start_date: '',
+    recurrence_rule: '',
   });
 
   useEffect(() => {

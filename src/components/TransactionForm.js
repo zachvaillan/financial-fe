@@ -38,6 +38,7 @@ export const TransactionForm = ({ title, formData, handleSubmit, handleChange })
       <div>
         <label>Frequency</label>
         <select name="recurrence_rule">
+          <option value="weekly">Weekly</option>
           <option value="monthly">Monthly</option>
         </select>
       </div>

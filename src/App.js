@@ -7,6 +7,9 @@ import { Assets } from './components/Assets';
 import { DateViews } from './date-views';
 import { Tabs } from './components/Tabs';
 import { Liability } from './components/Liability';
+import { Asset } from './components/Asset';
+import { Expense } from './components/Expense';
+import { Income } from './components/Income';
 
 function App() {
   const [currentTab, handleCurrentTab] = useState();
@@ -26,9 +29,9 @@ function App() {
       </div>
       <DateViews />
       {openLiability && <Liability id={openLiability} />}
-      {/* {openAsset && <Asset id={openAsset} />}
+      {openAsset && <Asset id={openAsset} />}
       {openExpense && <Expense id={openExpense} />}
-      {openIncome && <Income id={openIncome} />} */}
+      {openIncome && <Income id={openIncome} />}
     </div>
   );
 }

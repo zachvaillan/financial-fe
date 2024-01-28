@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useFetcher } from '../useFetcher';
 import { AccountForm } from './AccountForm';
 
-export const Asset = () => {
+export const Asset = ({id}) => {
   const { data, fetchData } = useFetcher(`/api/v1/assets/${id}`);
   const [formData, setFormData] = useState({
     name: '',
