@@ -1,6 +1,9 @@
 import '../form.css';
+import { useFetchLabels } from '../../../useFetchLabels';
 
 export const AccountForm = ({ title, formData, handleSubmit, handleChange }) => {
+  const { data: labels } = useFetchLabels();
+
   return (
     <form className="Assets" onSubmit={handleSubmit}>
       <h3>{title}</h3>
@@ -39,6 +42,16 @@ export const AccountForm = ({ title, formData, handleSubmit, handleChange }) => 
               value={formData.interest_rate}
               onChange={handleChange}
           />
+      </div>
+      <div>
+        <label>Label</label>
+        <select name="label">
+          {labels?.map(label => {
+            return(
+              <option value={label.id}>{label.name}</option>
+            )
+          })}
+        </select>
       </div>
       <button type="submit">Submit</button>
     </form>

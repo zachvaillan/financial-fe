@@ -1,6 +1,9 @@
 import '../form.css';
+import { useFetchLabels } from '../../../useFetchLabels';
 
 export const TransactionForm = ({ title, formData, handleSubmit, handleChange }) => {
+  const { data: labels } = useFetchLabels();
+
   return (
     <form className="Assets" onSubmit={handleSubmit}>
       <h3>{title}</h3>
@@ -40,6 +43,16 @@ export const TransactionForm = ({ title, formData, handleSubmit, handleChange })
         <select name="recurrence_rule">
           <option value="weekly">Weekly</option>
           <option value="monthly">Monthly</option>
+        </select>
+      </div>
+      <div>
+        <label>Label</label>
+        <select name="label">
+          {labels?.map(label => {
+            return(
+              <option value={label.id}>{label.name}</option>
+            )
+          })}
         </select>
       </div>
       <button type="submit">Submit</button>

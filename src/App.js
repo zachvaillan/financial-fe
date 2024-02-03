@@ -10,6 +10,7 @@ import { Liability } from './liabilities/Liability';
 import { Asset } from './assets/Asset';
 import { Expense } from './expenses/Expense';
 import { Income } from './incomes/Income';
+import { usePostRequest } from './usePostRequest';
 
 function App() {
   const [currentTab, handleCurrentTab] = useState();
@@ -17,6 +18,9 @@ function App() {
   const [openAsset, setOpenAsset] = useState();
   const [openExpense, setOpenExpense] = useState();
   const [openIncome, setOpenIncome] = useState();
+  const [newLabelOpen, setNewLabelOpen] = useState();
+  const [labelName, setLabelName] = useState();
+  const { sendPostRequest } = usePostRequest();
 
   return (
     <div className="App">
@@ -28,6 +32,14 @@ function App() {
         {currentTab === 'Incomes' && <Incomes setOpenIncome={setOpenIncome} />}
       </div>
       <DateViews />
+      <div><button onClick={() => setNewLabelOpen(true)}>New Label</button></div>
+      {newLabelOpen && 
+        <div>
+          <label>Name</label>
+          <input value={labelName} onChange={(e) => setLabelName(e.target.value)} type='text' />
+          <button onClick={() => sendPostRequest('/api/v1/labels', { name: labelName }, 'POST')}>Create</button>
+        </div>
+      }
       {openLiability && <Liability id={openLiability} />}
       {openAsset && <Asset id={openAsset} />}
       {openExpense && <Expense id={openExpense} />}
