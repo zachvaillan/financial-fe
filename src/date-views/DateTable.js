@@ -1,7 +1,9 @@
 import './calendar.css';
 import { Table } from '../components/tables/Table';
+import { useCalendar } from '../contexts/CalendarContext';
 
-export const DateTable = ({ lineItems }) => {
+export const DateTable = () => {
+  const { lineItems } = useCalendar();
 
   return (
     <div>

@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
 import './calendar.css';
+import { useCalendar } from '../contexts/CalendarContext';
 
-export const Calendar = ({ days, currentDate, lineItems }) => {
+export const Calendar = ({ days, currentDate }) => {
+  const { lineItems } = useCalendar();
   
   return (
     <div>

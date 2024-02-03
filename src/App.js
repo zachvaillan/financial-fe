@@ -11,6 +11,7 @@ import { Asset } from './assets/Asset';
 import { Expense } from './expenses/Expense';
 import { Income } from './incomes/Income';
 import { usePostRequest } from './usePostRequest';
+import { LabelsProvider } from './contexts/LabelsContext';
 
 function App() {
   const [currentTab, handleCurrentTab] = useState();
@@ -24,26 +25,28 @@ function App() {
 
   return (
     <div className="App">
-      <div className="info">
-        <Tabs tabArray={['Assets', 'Liabilities', 'Incomes', 'Expenses']} handleCurrentTab={handleCurrentTab} />
-        {currentTab === 'Assets' && <Assets setOpenAsset={setOpenAsset} />}
-        {currentTab === 'Liabilities' && <Liabilities setOpenLiability={setOpenLiability} />}
-        {currentTab === 'Expenses' && <Expenses setOpenExpense={setOpenExpense} />}
-        {currentTab === 'Incomes' && <Incomes setOpenIncome={setOpenIncome} />}
-      </div>
-      <DateViews />
-      <div><button onClick={() => setNewLabelOpen(true)}>New Label</button></div>
-      {newLabelOpen && 
-        <div>
-          <label>Name</label>
-          <input value={labelName} onChange={(e) => setLabelName(e.target.value)} type='text' />
-          <button onClick={() => sendPostRequest('/api/v1/labels', { name: labelName }, 'POST')}>Create</button>
+      <LabelsProvider>
+        <div className="info">
+          <Tabs tabArray={['Assets', 'Liabilities', 'Incomes', 'Expenses']} handleCurrentTab={handleCurrentTab} />
+          {currentTab === 'Assets' && <Assets setOpenAsset={setOpenAsset} />}
+          {currentTab === 'Liabilities' && <Liabilities setOpenLiability={setOpenLiability} />}
+          {currentTab === 'Expenses' && <Expenses setOpenExpense={setOpenExpense} />}
+          {currentTab === 'Incomes' && <Incomes setOpenIncome={setOpenIncome} />}
         </div>
-      }
-      {openLiability && <Liability id={openLiability} />}
-      {openAsset && <Asset id={openAsset} />}
-      {openExpense && <Expense id={openExpense} />}
-      {openIncome && <Income id={openIncome} />}
+        <DateViews />
+        <div><button onClick={() => setNewLabelOpen(true)}>New Label</button></div>
+        {newLabelOpen && 
+          <div>
+            <label>Name</label>
+            <input value={labelName} onChange={(e) => setLabelName(e.target.value)} type='text' />
+            <button onClick={() => sendPostRequest('/api/v1/labels', { name: labelName }, 'POST')}>Create</button>
+          </div>
+        }
+        {openLiability && <Liability id={openLiability} />}
+        {openAsset && <Asset id={openAsset} />}
+        {openExpense && <Expense id={openExpense} />}
+        {openIncome && <Income id={openIncome} />}
+      </LabelsProvider>
     </div>
   );
 }

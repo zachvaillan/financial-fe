@@ -1,8 +1,8 @@
 import '../form.css';
-import { useFetchLabels } from '../../../useFetchLabels';
+import { useLabels } from '../../../contexts/LabelsContext';
 
 export const AccountForm = ({ title, formData, handleSubmit, handleChange }) => {
-  const { data: labels } = useFetchLabels();
+  const { labels } = useLabels();
 
   return (
     <form className="Assets" onSubmit={handleSubmit}>
