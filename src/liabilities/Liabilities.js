@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useFetcher } from '../useFetcher';
 import { usePostRequest } from '../usePostRequest';
-import { Table } from './Table';
+import { Table } from '../components/tables/Table';
 import { centsToDollars } from '../utils/centsToDollars';
-import { AccountForm } from './AccountForm';
+import { AccountForm } from '../components/forms/account-form/AccountForm';
 import { Dialog, DialogContent } from '@mui/material';
 
 export const Liabilities = ({setOpenLiability}) => {

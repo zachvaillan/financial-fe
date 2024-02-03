@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Calendar } from './Calendar';
 import { DateTable } from './DateTable';
-import { Tabs } from '../components/Tabs';
+import { Tabs } from '../components/tabs/Tabs';
 import { centsToDollars } from '../utils/centsToDollars';
 import { useFetcher } from '../useFetcher';
 

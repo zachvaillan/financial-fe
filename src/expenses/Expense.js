@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useFetcher } from '../useFetcher';
-import { TransactionForm } from './TransactionForm';
+import { TransactionForm } from '../components/forms/cash-flow-form/TransactionForm';
 
-export const Income = ({id}) => {
-  const { data, fetchData } = useFetcher(`/api/v1/incomes/${id}`);
+export const Expense = ({id}) => {
+  const { data, fetchData } = useFetcher(`/api/v1/expenses/${id}`);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -25,7 +25,7 @@ export const Income = ({id}) => {
 
   return (
     <div>
-      <TransactionForm title="Edit Income" formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} />
+      <TransactionForm title="Edit Expense" formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} />
     </div>
   );
 }

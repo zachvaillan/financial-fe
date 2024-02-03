@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useFetcher } from '../useFetcher';
 import { usePostRequest } from '../usePostRequest';
-import { Table } from './Table';
+import { Table } from '../components/tables/Table';
 import { centsToDollars } from '../utils/centsToDollars';
 import { Dialog, DialogContent } from '@mui/material';
-import { TransactionForm } from './TransactionForm';
+import { TransactionForm } from '../components/forms/cash-flow-form/TransactionForm';
 
 export const Expenses = ({setOpenExpense}) => {
     const { data, fetchData } = useFetcher('/api/v1/expenses');

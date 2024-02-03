@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import './App.css';
-import { Expenses } from './components/Expenses';
-import { Incomes } from './components/Incomes';
-import { Liabilities } from './components/Liabilities';
-import { Assets } from './components/Assets';
+import { Expenses } from './expenses/Expenses';
+import { Incomes } from './incomes/Incomes';
+import { Liabilities } from './liabilities/Liabilities';
+import { Assets } from './assets/Assets';
 import { DateViews } from './date-views';
-import { Tabs } from './components/Tabs';
-import { Liability } from './components/Liability';
-import { Asset } from './components/Asset';
-import { Expense } from './components/Expense';
-import { Income } from './components/Income';
+import { Tabs } from './components/tabs/Tabs';
+import { Liability } from './liabilities/Liability';
+import { Asset } from './assets/Asset';
+import { Expense } from './expenses/Expense';
+import { Income } from './incomes/Income';
 
 function App() {
   const [currentTab, handleCurrentTab] = useState();

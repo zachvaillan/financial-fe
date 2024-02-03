@@ -1,4 +1,4 @@
-import './AccountForm.css';
+import '../form.css';
 
 export const AccountForm = ({ title, formData, handleSubmit, handleChange }) => {
   return (

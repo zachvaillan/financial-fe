@@ -1,5 +1,5 @@
 import './calendar.css';
-import { Table } from '../components/Table';
+import { Table } from '../components/tables/Table';
 
 export const DateTable = ({ lineItems }) => {
 

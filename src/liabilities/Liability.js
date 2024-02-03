@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useFetcher } from '../useFetcher';
-import { TransactionForm } from './TransactionForm';
+import { AccountForm } from '../components/forms/account-form/AccountForm';
 
-export const Expense = ({id}) => {
-  const { data, fetchData } = useFetcher(`/api/v1/expenses/${id}`);
+export const Liability = ({ id }) => {
+  const { data, fetchData } = useFetcher(`/api/v1/liabilities/${id}`);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     amount: '',
-    start_date: '',
-    recurrence_rule: '',
+    interest_rate: '',
   });
 
   useEffect(() => {
@@ -25,7 +24,7 @@ export const Expense = ({id}) => {
 
   return (
     <div>
-      <TransactionForm title="Edit Expense" formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} />
+      <AccountForm title="Edit Liability" formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} />
     </div>
   );
-}
+};
