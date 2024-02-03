@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Calendar } from './Calendar';
 import { DateTable } from './DateTable';
 import { Tabs } from '../components/Tabs';
+import { centsToDollars } from '../utils/centsToDollars';
+import { useFetcher } from '../useFetcher';
 
 export const DateViews = () => {
   const [currentTab, setCurrentTab] = useState();
@@ -14,11 +16,32 @@ export const DateViews = () => {
   const pushedDays = Array.from({ length: firstDay - 1 });
   days.unshift(...pushedDays)
 
+  const { data, fetchData } = useFetcher('/api/v1/calendar')
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const normalizeDates = (occurrence_date) => {
+    const date = new Date(occurrence_date);
+    const dayOfMonth = date.getDate();
+
+    return dayOfMonth;
+  }
+
+  const lineItems = useMemo(() => {
+    if (!data) return [];
+
+    return data.map((cashFlow) => {
+      return {...cashFlow, dollars: centsToDollars(cashFlow.amount.cents), date: normalizeDates(cashFlow.occurence_date)}
+    })
+  }, [data])
+
   return (
     <div>
       <Tabs tabArray={['Calendar', 'Date Table']} handleCurrentTab={setCurrentTab} />
-      {currentTab === 'Calendar' && <Calendar days={days} currentDate={currentDate} />}
-      {currentTab === 'Date Table' && <DateTable />}
+      {currentTab === 'Calendar' && <Calendar lineItems={lineItems} days={days} currentDate={currentDate} />}
+      {currentTab === 'Date Table' && <DateTable lineItems={lineItems} />}
     </div>
   );
 };

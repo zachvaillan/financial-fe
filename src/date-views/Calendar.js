@@ -1,7 +1,8 @@
-import './calendar.css'
+import { useEffect, useState } from 'react';
+import './calendar.css';
 
-export const Calendar = ({ days, currentDate }) => {
-
+export const Calendar = ({ days, currentDate, lineItems }) => {
+  
   return (
     <div>
       <h2>Calendar</h2>
@@ -13,11 +14,19 @@ export const Calendar = ({ days, currentDate }) => {
           <div>Friday</div>
           <div>Saturday</div>
           <div>Sunday</div>
-          {days?.map((day, index) => (
-            <div key={index} className={`calendar-day ${day === currentDate ? "active" : ''}`}>
-              {day}
-            </div>
-          ))}
+          {days?.map((day, index) => {
+            const dayLineItems = lineItems.filter(li => li.date === day)
+            return (
+              <div key={index} className={`calendar-day ${day === currentDate ? "active" : ''}`}>
+                {day}
+                {dayLineItems.map((dli) => {
+                  return (
+                    <div>{dli.name}</div>
+                  )
+                })}
+              </div>
+            )
+          })}
       </div>
     </div>
   )
