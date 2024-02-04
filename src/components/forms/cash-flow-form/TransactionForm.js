@@ -40,14 +40,15 @@ export const TransactionForm = ({ title, formData, handleSubmit, handleChange })
       </div>
       <div>
         <label>Frequency</label>
-        <select name="recurrence_rule">
+        <select value={formData.recurrence_rule} onChange={handleChange} name="recurrence_rule">
           <option value="weekly">Weekly</option>
+          <option value="biweekly">Biweekly</option>
           <option value="monthly">Monthly</option>
         </select>
       </div>
       <div>
         <label>Label</label>
-        <select name="label">
+        <select onChange={handleChange} name="label">
           {labels?.map(label => {
             return(
               <option value={label.id}>{label.name}</option>

@@ -17,7 +17,10 @@ export const CalendarProvider = ({ children }) => {
   }, []);
 
   const normalizeDates = (occurrence_date) => {
-    const date = new Date(occurrence_date);
+    const splitDate = occurrence_date.split('-');
+    if (splitDate.length !== 3) return;
+
+    const date = new Date(splitDate[0], splitDate[1], splitDate[2]);
     const dayOfMonth = date.getDate();
 
     return dayOfMonth;
