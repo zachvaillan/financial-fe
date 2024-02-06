@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-export const useFetcher = (url, options) => {
+export const useFetcher = () => {
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    const fetchData = async () => {
+    const fetchData = async (url, options) => {
         setIsLoading(true);
         try {
             const response = await fetch(`http://localhost:3001${url}`, options);

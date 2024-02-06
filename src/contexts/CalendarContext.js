@@ -2,7 +2,6 @@ import React, { createContext, useContext, useMemo, useEffect } from 'react';
 import { useFetcher } from '../useFetcher';
 import { centsToDollars } from '../utils/centsToDollars';
 
-// Create a context with a default value
 const CalendarContext = createContext();
 
 export function useCalendar() {
@@ -10,10 +9,10 @@ export function useCalendar() {
 }
 
 export const CalendarProvider = ({ children }) => {
-  const { data, fetchData } = useFetcher('/api/v1/calendar');
+  const { data, fetchData } = useFetcher();
 
   useEffect(() => {
-    fetchData()
+    fetchData('/api/v1/calendar')
   }, []);
 
   const normalizeDates = (occurrence_date) => {

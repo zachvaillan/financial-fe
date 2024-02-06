@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useMemo, useEffect } from 'react';
 import { useFetcher } from '../useFetcher';
 
-// Create a context with a default value
 const LabelsContext = createContext();
 
 export function useLabels() {
