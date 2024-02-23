@@ -1,4 +1,4 @@
-const FormData = {
+export const FormData = {
   name: '',
   email: '',
   amount: '',
@@ -14,7 +14,6 @@ export const AccountsTabs = {
     urlPlural: '/assets',
     titleSingle: 'Asset',
     titlePlural: 'Assets',
-    formData: FormData.account
   },
   Liabilities: {
     columns: ['Name', 'Amount'],
@@ -23,6 +22,5 @@ export const AccountsTabs = {
     urlPlural: '/liabilities',
     titleSingle: 'Liability',
     titlePlural: 'Liabilities',
-    formData: FormData.account
   }
 }

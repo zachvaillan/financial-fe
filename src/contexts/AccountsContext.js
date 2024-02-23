@@ -5,7 +5,7 @@ import { usePostRequest } from '../usePostRequest';
 import { centsToDollars } from '../utils/centsToDollars';
 import { AccountForm } from '../components/forms/account-form/AccountForm';
 import { Dialog, DialogContent } from '@mui/material';
-import { AccountsTabs } from '../constants/AccountsTabs';
+import { AccountsTabs, FormData } from '../constants/AccountsTabs';
 
 const AccountsContext = createContext();
 
@@ -16,7 +16,7 @@ export function useAccounts() {
 export const AccountsProvider = ({ children }) => {
   const [currentTab, setCurrentTab] = useState('Assets');
   const [itemOpen, setItemOpen] = useState();
-  const [formData, setFormData] = useState(AccountsTabs[currentTab].formData);
+  const [formData, setFormData] = useState(FormData);
   const { data, fetchData } = useFetcher();
   const { data: singleData, fetchData: fetchSingleData } = useFetcher();
   const { sendPostRequest } = usePostRequest();

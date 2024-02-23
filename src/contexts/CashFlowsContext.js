@@ -4,10 +4,9 @@ import { useFetcher } from '../useFetcher';
 import { usePostRequest } from '../usePostRequest';
 import { Table } from '../components/tables/Table';
 import { centsToDollars } from '../utils/centsToDollars';
-import { AccountForm } from '../components/forms/account-form/AccountForm';
 import { Dialog, DialogContent } from '@mui/material';
 import { Tabs } from '../components/tabs/Tabs';
-import { AccountsTabs } from '../constants/AccountsTabs';
+import { CashFlowsTabs, FormData } from '../constants/CashFlowsTabs';
 import { TransactionForm } from '../components/forms/cash-flow-form/TransactionForm';
 
 const AccountsContext = createContext();
@@ -19,18 +18,18 @@ export function useAccounts() {
 export const AccountsProvider = () => {
   const [currentTab, setCurrentTab] = useState('Expenses');
   const [itemOpen, setItemOpen] = useState();
-  const [formData, setFormData] = useState(AccountsTabs[currentTab].formData);
+  const [formData, setFormData] = useState(FormData);
   const { data, fetchData } = useFetcher();
   const { data: singleData, fetchData: fetchSingleData } = useFetcher();
   const { sendPostRequest } = usePostRequest();
 
   useEffect(() => {
-    fetchData(`/api/v1/${AccountsTabs[currentTab].urlPlural}`);
+    fetchData(`/api/v1/${CashFlowsTabs[currentTab].urlPlural}`);
   }, [currentTab, itemOpen])
 
   useEffect(() => {
     if (itemOpen) {
-      fetchSingleData(`/api/v1/${AccountsTabs[currentTab].urlPlural}/${itemOpen}`);
+      fetchSingleData(`/api/v1/${CashFlowsTabs[currentTab].urlPlural}/${itemOpen}`);
     }
   }, [itemOpen])
 
@@ -53,12 +52,12 @@ export const AccountsProvider = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formDataWithCents = { ...formData, amount_cents: formData.amount * 100 }
-    sendPostRequest(`/api/v1/${AccountsTabs[currentTab].urlPlural}`, formDataWithCents, 'POST');
+    sendPostRequest(`/api/v1/${CashFlowsTabs[currentTab].urlPlural}`, formDataWithCents, 'POST');
     fetchData();
   };
 
   const handleDelete = (id) => {
-    sendPostRequest(`/api/v1/${AccountsTabs[currentTab].urlPlural}/${id}`, null, 'DELETE');
+    sendPostRequest(`/api/v1/${CashFlowsTabs[currentTab].urlPlural}/${id}`, null, 'DELETE');
     fetchData();
   }
 
@@ -73,7 +72,7 @@ export const AccountsProvider = () => {
 
   const handleClose = () => {
     setItemOpen(false);
-    setFormData(AccountsTabs[currentTab].formData)
+    setFormData(CashFlowsTabs[currentTab].formData)
   }
 
   return (
@@ -82,8 +81,8 @@ export const AccountsProvider = () => {
         tabArray={['Incomes', 'Expenses']}
         handleCurrentTab={setCurrentTab}
       />
-      <h1>{AccountsTabs[currentTab].titlePlural}</h1>
-      <button onClick={() => setItemOpen(true)}>New {AccountsTabs[currentTab].titleSingle}</button>
+      <h1>{CashFlowsTabs[currentTab].titlePlural}</h1>
+      <button onClick={() => setItemOpen(true)}>New {CashFlowsTabs[currentTab].titleSingle}</button>
       <div>Total: {totalAmount / 100}</div>
       <Table 
         handleOpen={setItemOpen}
@@ -94,20 +93,12 @@ export const AccountsProvider = () => {
       />
       <Dialog open={itemOpen} onClose={handleClose}>
         <DialogContent>
-          {currentTab === 'Expenses' || currentTab === 'Incomes' ? 
           <TransactionForm
-            title={`Create ${AccountsTabs[currentTab].titleSingle}`}
+            title={`Create ${CashFlowsTabs[currentTab].titleSingle}`}
             formData={formData}
             handleChange={handleChange}
             handleSubmit={handleSubmit}
           />
-          :
-          <AccountForm 
-            title={`Edit ${AccountsTabs[currentTab].titleSingle}`}
-            formData={formData}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-          />}
         </DialogContent>
       </Dialog>
     </>

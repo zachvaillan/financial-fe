@@ -1,4 +1,4 @@
-const FormData = {
+export const FormData = {
   name: '',
   email: '',
   amount: '',
@@ -6,7 +6,7 @@ const FormData = {
   recurrence_rule: '',
 }
 
-export const AccountsTabs = {
+export const CashFlowsTabs = {
   Expenses: {
     columns: ['Name', 'Amount'],
     keys: ['name', 'amount'],
@@ -14,7 +14,6 @@ export const AccountsTabs = {
     urlPlural: '/expenses',
     titleSingle: 'Expense',
     titlePlural: 'Expenses',
-    formData: FormData.transaction
   },
   Incomes: {
     columns: ['Name', 'Amount'],
@@ -23,6 +22,5 @@ export const AccountsTabs = {
     urlPlural: '/incomes',
     titleSingle: 'Income',
     titlePlural: 'Incomes',
-    formData: FormData.transaction
   },
 }
