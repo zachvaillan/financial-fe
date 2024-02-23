@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useMemo, useEffect } from 'react';
 import { useFetcher } from '../useFetcher';
 import { centsToDollars } from '../utils/centsToDollars';
+import { getDaysInMonth } from '../utils/getDaysInMonth';
+import { getFirstDayOfMonth } from '../utils/getFirstDayOfMonth';
 
 const CalendarContext = createContext();
 
@@ -33,11 +35,19 @@ export const CalendarProvider = ({ children }) => {
     })
   }, [data])
 
+  const date = new Date()
+  const currentDate = date.getDate();
+  const daysCount = getDaysInMonth(date);
+  const firstDay = getFirstDayOfMonth(date);
+  const days = Array.from({ length: daysCount }, (_, index) => index + 1);
+  const pushedDays = Array.from({ length: firstDay - 1 });
+  days.unshift(...pushedDays)
+
   const context = useMemo(() => {
     return(
-      { lineItems }
+      { lineItems, currentDate, days }
     )
-  }, [data])
+  }, [lineItems, currentDate, days])
 
   return (
     <CalendarContext.Provider value={context}>

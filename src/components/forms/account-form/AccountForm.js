@@ -28,10 +28,10 @@ export const AccountForm = ({ title, formData, handleSubmit, handleChange }) => 
       <div>
           <label>Amount:</label>
           <input
-              type="text"
-              name="amount"
-              checked={formData.amount}
-              onChange={handleChange}
+            type="text"
+            name="amount"
+            value={formData.amount}
+            onChange={handleChange}
           />
       </div>
       <div>

@@ -1,11 +1,14 @@
-import React, { createContext, useContext, useState, useMemo } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { useEffect } from 'react';
 import { useFetcher } from '../useFetcher';
 import { usePostRequest } from '../usePostRequest';
+import { Table } from '../components/tables/Table';
 import { centsToDollars } from '../utils/centsToDollars';
 import { AccountForm } from '../components/forms/account-form/AccountForm';
 import { Dialog, DialogContent } from '@mui/material';
+import { Tabs } from '../components/tabs/Tabs';
 import { AccountsTabs } from '../constants/AccountsTabs';
+import { TransactionForm } from '../components/forms/cash-flow-form/TransactionForm';
 
 const AccountsContext = createContext();
 
@@ -13,8 +16,8 @@ export function useAccounts() {
   return useContext(AccountsContext);
 }
 
-export const AccountsProvider = ({ children }) => {
-  const [currentTab, setCurrentTab] = useState('Assets');
+export const AccountsProvider = () => {
+  const [currentTab, setCurrentTab] = useState('Expenses');
   const [itemOpen, setItemOpen] = useState();
   const [formData, setFormData] = useState(AccountsTabs[currentTab].formData);
   const { data, fetchData } = useFetcher();
@@ -73,30 +76,40 @@ export const AccountsProvider = ({ children }) => {
     setFormData(AccountsTabs[currentTab].formData)
   }
 
-  const context = useMemo(() => {
-    return({
-      mappedData,
-      totalAmount,
-      setItemOpen,
-      currentTab,
-      handleDelete,
-      setCurrentTab
-    })
-  }, [mappedData, totalAmount, setItemOpen, currentTab, handleDelete, setCurrentTab])
-
   return (
-    <AccountsContext.Provider value={context}>
-      {children}
+    <>
+      <Tabs 
+        tabArray={['Incomes', 'Expenses']}
+        handleCurrentTab={setCurrentTab}
+      />
+      <h1>{AccountsTabs[currentTab].titlePlural}</h1>
+      <button onClick={() => setItemOpen(true)}>New {AccountsTabs[currentTab].titleSingle}</button>
+      <div>Total: {totalAmount / 100}</div>
+      <Table 
+        handleOpen={setItemOpen}
+        handleDelete={handleDelete}
+        rows={mappedData}
+        columns={['Name', 'Amount']}
+        keys={['name', 'amount']} 
+      />
       <Dialog open={itemOpen} onClose={handleClose}>
         <DialogContent>
+          {currentTab === 'Expenses' || currentTab === 'Incomes' ? 
+          <TransactionForm
+            title={`Create ${AccountsTabs[currentTab].titleSingle}`}
+            formData={formData}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+          />
+          :
           <AccountForm 
             title={`Edit ${AccountsTabs[currentTab].titleSingle}`}
             formData={formData}
             handleChange={handleChange}
             handleSubmit={handleSubmit}
-          />
+          />}
         </DialogContent>
       </Dialog>
-    </AccountsContext.Provider>
+    </>
   )
 }

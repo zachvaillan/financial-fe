@@ -8,10 +8,10 @@ export function useLabels() {
 }
 
 export const LabelsProvider = ({ children }) => {
-  const { data, fetchData } = useFetcher('/api/v1/labels');
+  const { data, fetchData } = useFetcher();
 
   useEffect(() => {
-    fetchData()
+    fetchData('/api/v1/labels')
   }, []);
 
   const context = useMemo(() => {

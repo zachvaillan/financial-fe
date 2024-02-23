@@ -1,8 +1,8 @@
 import './calendar.css';
 import { useCalendar } from '../contexts/CalendarContext';
 
-export const Calendar = ({ days, currentDate }) => {
-  const { lineItems } = useCalendar();
+export const Calendar = () => {
+  const { lineItems, days, currentDate } = useCalendar();
   
   return (
     <div>
@@ -31,4 +31,4 @@ export const Calendar = ({ days, currentDate }) => {
       </div>
     </div>
   )
-}
+};
