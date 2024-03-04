@@ -8,6 +8,8 @@ import { Calendar } from './views/Calendar';
 import { DateTable } from './views/DateTable';
 import { CalendarProvider } from './contexts/CalendarContext';
 import { Accounts } from './views/Accounts';
+import { CashFlows } from './views/CashFlows';
+import { CashFlowsProvider } from './contexts/CashFlowsContext';
 
 function App() {
   const [newLabelOpen, setNewLabelOpen] = useState();
@@ -30,6 +32,9 @@ function App() {
             </div>
           }
         </AccountsProvider>
+        <CashFlowsProvider>
+          {currentTab === 'Cash Flows' && <CashFlows />}
+        </CashFlowsProvider>
         <div><button onClick={() => setNewLabelOpen(true)}>New Label</button></div>
         {newLabelOpen && 
           <div>

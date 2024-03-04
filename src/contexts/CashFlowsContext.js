@@ -9,13 +9,13 @@ import { Tabs } from '../components/tabs/Tabs';
 import { CashFlowsTabs, FormData } from '../constants/CashFlowsTabs';
 import { TransactionForm } from '../components/forms/cash-flow-form/TransactionForm';
 
-const AccountsContext = createContext();
+const CashFlowsContext = createContext();
 
-export function useAccounts() {
-  return useContext(AccountsContext);
+export function useCashFlows() {
+  return useContext(CashFlowsContext);
 }
 
-export const AccountsProvider = () => {
+export const CashFlowsProvider = () => {
   const [currentTab, setCurrentTab] = useState('Expenses');
   const [itemOpen, setItemOpen] = useState();
   const [formData, setFormData] = useState(FormData);
@@ -76,21 +76,6 @@ export const AccountsProvider = () => {
   }
 
   return (
-    <>
-      <Tabs 
-        tabArray={['Incomes', 'Expenses']}
-        handleCurrentTab={setCurrentTab}
-      />
-      <h1>{CashFlowsTabs[currentTab].titlePlural}</h1>
-      <button onClick={() => setItemOpen(true)}>New {CashFlowsTabs[currentTab].titleSingle}</button>
-      <div>Total: {totalAmount / 100}</div>
-      <Table 
-        handleOpen={setItemOpen}
-        handleDelete={handleDelete}
-        rows={mappedData}
-        columns={['Name', 'Amount']}
-        keys={['name', 'amount']} 
-      />
       <Dialog open={itemOpen} onClose={handleClose}>
         <DialogContent>
           <TransactionForm
@@ -101,6 +86,5 @@ export const AccountsProvider = () => {
           />
         </DialogContent>
       </Dialog>
-    </>
   )
 }
