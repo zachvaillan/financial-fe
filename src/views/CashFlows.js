@@ -16,7 +16,7 @@ export const CashFlows = () => {
   return (
     <>
       <Tabs 
-        tabArray={['Assets', 'Liabilities']}
+        tabArray={['Incomes', 'Expenses']}
         handleCurrentTab={setCurrentTab}
       />
       <h1>{CashFlowsTabs[currentTab].titlePlural}</h1>

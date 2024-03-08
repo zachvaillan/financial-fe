@@ -33,7 +33,11 @@ function App() {
           }
         </AccountsProvider>
         <CashFlowsProvider>
-          {currentTab === 'Cash Flows' && <CashFlows />}
+          {currentTab === 'Cash Flows' && 
+            <div className='info'>
+              <CashFlows />
+            </div>
+          }
         </CashFlowsProvider>
         <div><button onClick={() => setNewLabelOpen(true)}>New Label</button></div>
         {newLabelOpen && 

@@ -1,11 +1,9 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useMemo } from 'react';
 import { useEffect } from 'react';
 import { useFetcher } from '../useFetcher';
 import { usePostRequest } from '../usePostRequest';
-import { Table } from '../components/tables/Table';
 import { centsToDollars } from '../utils/centsToDollars';
 import { Dialog, DialogContent } from '@mui/material';
-import { Tabs } from '../components/tabs/Tabs';
 import { CashFlowsTabs, FormData } from '../constants/CashFlowsTabs';
 import { TransactionForm } from '../components/forms/cash-flow-form/TransactionForm';
 
@@ -15,7 +13,7 @@ export function useCashFlows() {
   return useContext(CashFlowsContext);
 }
 
-export const CashFlowsProvider = () => {
+export const CashFlowsProvider = ({ children }) => {
   const [currentTab, setCurrentTab] = useState('Expenses');
   const [itemOpen, setItemOpen] = useState();
   const [formData, setFormData] = useState(FormData);
@@ -75,7 +73,26 @@ export const CashFlowsProvider = () => {
     setFormData(CashFlowsTabs[currentTab].formData)
   }
 
+  const context = useMemo(() => {
+    return({
+      mappedData,
+      totalAmount,
+      setItemOpen,
+      currentTab,
+      handleDelete,
+      setCurrentTab
+    })
+  }, [
+    mappedData,
+    totalAmount,
+    setItemOpen,
+    currentTab,
+    handleDelete,
+    setCurrentTab
+  ])
+
   return (
+    <CashFlowsContext.Provider value={context}>
       <Dialog open={itemOpen} onClose={handleClose}>
         <DialogContent>
           <TransactionForm
@@ -86,5 +103,7 @@ export const CashFlowsProvider = () => {
           />
         </DialogContent>
       </Dialog>
+      {children}
+    </CashFlowsContext.Provider>
   )
 }
