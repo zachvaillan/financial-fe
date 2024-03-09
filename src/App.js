@@ -20,7 +20,7 @@ function App() {
   return (
     <div className="App">
       <LabelsProvider>
-        <Tabs tabArray={['Calendar', 'Date Table', 'Accounts', 'Cash Flows']} handleCurrentTab={setCurrentTab} />
+        <Tabs tabArray={['Calendar']} handleCurrentTab={setCurrentTab} />
         <CalendarProvider>
           {currentTab === 'Calendar' && <Calendar />}
           {currentTab === 'Date Table' && <DateTable />}

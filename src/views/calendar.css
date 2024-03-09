@@ -18,3 +18,15 @@
   justify-content: space-evenly;
   gap: 20px;
 }
+
+.negative-balances-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
+.dashboard-view {
+  display: flex;
+}

@@ -30,9 +30,24 @@ export const CalendarProvider = ({ children }) => {
   const lineItems = useMemo(() => {
     if (!data) return [];
 
-    return data.map((cashFlow) => {
-      return {...cashFlow, dollars: centsToDollars(cashFlow.amount.cents), date: normalizeDates(cashFlow.occurence_date)}
+    const negativeBalances = {}
+
+    const amountByDate = data.reduce((group, item) => {
+      const { occurence_date: date } = item;
+      group[date] = group[date] || 0;
+      item.cash_flowable_type === "Income" ? group[date] += item.amount.cents : group[date] -= item.amount.cents;
+      return group;
+    }, {});
+
+    Object.keys(amountByDate).forEach((dateKey) => {
+      const normalizedDate = normalizeDates(dateKey);
+      const amountCentsByDate = amountByDate[dateKey]
+      const normalizedAmount = centsToDollars(amountCentsByDate);
+      amountByDate[normalizedDate] = normalizedAmount;
+      if (amountCentsByDate < 0) negativeBalances[normalizedDate] = normalizedAmount;
+      delete amountByDate[dateKey];
     })
+    return { amountByDate, negativeBalances };
   }, [data])
 
   const date = new Date()
