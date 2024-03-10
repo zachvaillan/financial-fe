@@ -1,9 +1,6 @@
 .App {
-  text-align: center;
-  margin: 50px;
   display: flex;
-  flex-wrap: wrap;
-  padding: 0 200px;
+  background-color: white;
 }
 
 .App-logo {
@@ -45,4 +42,39 @@
   border: 1px solid black;
   width: 100%;
   margin-top: 50px;
+}
+
+.Header {
+  background-color: green;
+  width: 100%;
+  height: 75px;
+}
+
+.sidenav {
+  height: calc(100vh - 75px);
+  width: 300px;
+  border-right: 3px solid green;
+  background-color: rgba(0, 128, 0, 0.324);
+  display: flex;
+  flex-direction: column;
+  /* gap: 20px; */
+  box-sizing: border-box;
+  font-weight: bold;
+  padding: 50px 0;
+}
+
+.sidenav > * {
+  padding: 20px 50px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.sidenav > *:hover {
+  background-color: green;
+  color: white;
+}
+
+.content {
+  padding: 50px 100px;
+  width: 100%;
 }

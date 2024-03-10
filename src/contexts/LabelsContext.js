@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useMemo, useEffect } from 'react';
-import { useFetcher } from '../useFetcher';
+import { useFetcher } from '../hooks/useFetcher';
 
 const LabelsContext = createContext();
 

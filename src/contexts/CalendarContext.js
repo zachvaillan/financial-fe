@@ -1,8 +1,9 @@
-import React, { createContext, useContext, useMemo, useEffect } from 'react';
-import { useFetcher } from '../useFetcher';
+import React, { createContext, useContext, useMemo } from 'react';
 import { centsToDollars } from '../utils/centsToDollars';
 import { getDaysInMonth } from '../utils/getDaysInMonth';
 import { getFirstDayOfMonth } from '../utils/getFirstDayOfMonth';
+import { useFetchCalendar } from '../hooks/useFetchCalendar'; 
+import { useFetchAssets } from '../hooks/useFetchAssets';
 
 const CalendarContext = createContext();
 
@@ -11,11 +12,8 @@ export function useCalendar() {
 }
 
 export const CalendarProvider = ({ children }) => {
-  const { data, fetchData } = useFetcher();
-
-  useEffect(() => {
-    fetchData('/api/v1/calendar')
-  }, []);
+  const { data } = useFetchCalendar();
+  const { data: assets } = useFetchAssets();
 
   const normalizeDates = (occurrence_date) => {
     const splitDate = occurrence_date.split('-');
@@ -26,6 +24,10 @@ export const CalendarProvider = ({ children }) => {
 
     return dayOfMonth;
   }
+
+  const normalizedAssets = useMemo(() => {
+    return assets?.map((asset) => ({ ...asset, dollars: centsToDollars(asset.amount_cents) })) || [];
+  }, [assets]);
 
   const lineItems = useMemo(() => {
     if (!data) return [];
@@ -39,6 +41,14 @@ export const CalendarProvider = ({ children }) => {
       return group;
     }, {});
 
+    const itemsByDate = data.reduce((group, item) => {
+      const { occurence_date: date } = item;
+      const normalizedDate = normalizeDates(date)
+      group[normalizedDate] = group[date] || [];
+      group[normalizedDate].push({...item, dollars: centsToDollars(item.amount.cents)})
+      return group;
+    }, {});
+
     Object.keys(amountByDate).forEach((dateKey) => {
       const normalizedDate = normalizeDates(dateKey);
       const amountCentsByDate = amountByDate[dateKey]
@@ -47,7 +57,7 @@ export const CalendarProvider = ({ children }) => {
       if (amountCentsByDate < 0) negativeBalances[normalizedDate] = normalizedAmount;
       delete amountByDate[dateKey];
     })
-    return { amountByDate, negativeBalances };
+    return { amountByDate, negativeBalances, itemsByDate };
   }, [data])
 
   const date = new Date()
@@ -60,9 +70,9 @@ export const CalendarProvider = ({ children }) => {
 
   const context = useMemo(() => {
     return(
-      { lineItems, currentDate, days }
+      { lineItems, currentDate, days, assets: normalizedAssets }
     )
-  }, [lineItems, currentDate, days])
+  }, [lineItems, currentDate, days, normalizedAssets])
 
   return (
     <CalendarContext.Provider value={context}>

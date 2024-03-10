@@ -1,16 +1,29 @@
 .calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr); /* 7 days in a week */
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 days in a week */
+  flex: 1;
 }
 
 .calendar-day {
-    border: 1px solid #ddd;
-    padding: 10px;
-    min-height: 50px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  min-height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.calendar-day:hover {
+  border-color: green;
+}
+
+.selected-date {
+  border-color: green;
 }
 
 .active {
-    background-color: yellow;
+  background-color: yellow;
 }
 
 .obj-date {
@@ -19,14 +32,26 @@
   gap: 20px;
 }
 
-.negative-balances-container {
+.info-container {
   display: flex;
   flex-direction: column;
   gap: 25px;
   border: 1px solid black;
   border-radius: 8px;
+  padding: 50px;
+}
+
+.info-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .dashboard-view {
   display: flex;
+  gap: 50px;
+}
+
+.negative {
+  background-color: rgba(255, 0, 0, 0.375);
 }

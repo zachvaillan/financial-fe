@@ -18,9 +18,20 @@ function App() {
   const { sendPostRequest } = usePostRequest();
 
   return (
+    <>
+    <div className="Header">
+      
+    </div>
     <div className="App">
+      <div className="sidenav">
+        <p>Dashboard</p>
+        <p>Accounts</p>
+        <p>Strategies</p>
+        <p>Transactions</p>
+      </div>
+      <div className="content">
       <LabelsProvider>
-        <Tabs tabArray={['Calendar']} handleCurrentTab={setCurrentTab} />
+        {/* <Tabs tabArray={['Calendar']} handleCurrentTab={setCurrentTab} /> */}
         <CalendarProvider>
           {currentTab === 'Calendar' && <Calendar />}
           {currentTab === 'Date Table' && <DateTable />}
@@ -39,7 +50,7 @@ function App() {
             </div>
           }
         </CashFlowsProvider>
-        <div><button onClick={() => setNewLabelOpen(true)}>New Label</button></div>
+        {/* <div><button onClick={() => setNewLabelOpen(true)}>New Label</button></div> */}
         {newLabelOpen && 
           <div>
             <label>Name</label>
@@ -48,7 +59,9 @@ function App() {
           </div>
         }
       </LabelsProvider>
+      </div>
     </div>
+    </>
   );
 };
 
