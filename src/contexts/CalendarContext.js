@@ -36,7 +36,8 @@ export const CalendarProvider = ({ children }) => {
       cashFlows: data.cash_flows,
       accounts: data.accounts,
       currentDate: data.today,
-      calendarArray
+      calendarArray,
+      totalAmount: data.total_amount
     })
   }, [data])
 
