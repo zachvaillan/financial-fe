@@ -3,13 +3,16 @@ import { useCalendar } from '../contexts/CalendarContext';
 import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, Drawer } from '@mui/material';
 import { TransactionForm } from '../components/forms/cash-flow-form/TransactionForm';
+import { AccountForm } from '../components/forms/account-form/AccountForm';
 import { centsToDollars } from '../utils/centsToDollars';
 import { FormData } from '../constants/CashFlowsTabs';
 import { useFetchCashflowParent } from '../hooks/useFetchCashflowParent';
+import { useFetchAccount } from '../hooks/useFetchAccount';
 
 export const Calendar = () => {
   const [dateOpen, setDateOpen] = useState();
   const [selectedDates, setSelectedDates] = useState([]);
+  const [accountDrawerOpen, setAccountDrawerOpen] = useState({});
   const { days, cashFlows, currentDate, calendarArray, accounts, totalAmount } = useCalendar();
 
   const handleSelectDate = (day) => {
@@ -66,9 +69,18 @@ export const Calendar = () => {
             })} */}
           </div>
           <div className="info-container">
+            {accounts?.liabilities.map((liability) => {
+              return(
+                <div onClick={() => setAccountDrawerOpen({ item: liability, type: 'Liability' })}>
+                  <p>{liability.name}: {centsToDollars(liability.amount_cents)}</p>
+                </div>
+              )
+            })}
             {accounts?.assets.map((asset) => {
               return(
-                <p>{asset.name}: {centsToDollars(asset.amount_cents)}</p>
+                <div onClick={() => setAccountDrawerOpen({ item: asset, type: 'Asset' })}>
+                  <p>{asset.name}: {centsToDollars(asset.amount_cents)}</p>
+                </div>
               )
             })}
             <p>Total Net Worth Gain: {centsToDollars(totalAmount)}</p>
@@ -76,6 +88,7 @@ export const Calendar = () => {
         </div>
       </div>
       <DateDialog dateOpen={dateOpen} setDateOpen={setDateOpen} setSelectedDates={setSelectedDates} selectedDates={selectedDates}/>
+      <AccountDrawer drawerOpen={Boolean(accountDrawerOpen?.item)} handleClose={() => setAccountDrawerOpen()} item={accountDrawerOpen?.item} accountType={accountDrawerOpen?.type} />
     </div>
   )
 };
@@ -151,6 +164,38 @@ const CashFlowDrawer = ({ drawerOpen, handleClose, isPersistent, selectedDates, 
     >
       <div onClick={handleClose}>Close</div>
       <TransactionForm isEdit={Boolean(item)} accounts={accounts} formData={formData} handleChange={handleChange} selectedDates={selectedDates} />
+    </Drawer>
+  )
+}
+
+const AccountDrawer = ({ drawerOpen, handleClose, item, accountType }) => {
+  const [formData, setFormData] = useState(FormData);
+  const { accounts } = useCalendar();
+  const { data } = useFetchAccount(item?.id, accountType)
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  useEffect(() => {
+    const defaultData = data ? data : formData
+    setFormData({...defaultData, type: accountType, amount: defaultData.amount_cents / 100 })
+  }, [data, item])
+
+  return (
+    <Drawer
+      anchor='right'
+      open={drawerOpen}
+      onClose={handleClose}
+      style={{ zIndex: 1400 }}
+      variant={'temporary'}
+    >
+      <div onClick={handleClose}>Close</div>
+      <AccountForm isEdit={Boolean(item)} accounts={accounts} formData={formData} handleChange={handleChange} />
     </Drawer>
   )
 }
